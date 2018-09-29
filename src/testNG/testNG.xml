@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="testproj" parallel="false" thread-count="4" data-provider-thread-count="2">
+    <test name="testDemo1" verbose="2">
+        <!--<packages>-->
+        <!--<package name="com.testproj.Demo"/>-->
+        <!--</packages>-->
+        <classes>
+            <class name="com.ipaylinks.jiaqi.TestDemo"></class>
+            <class name="com.ipaylinks.jiaqi.test.TestCase1"></class>
+        </classes>
+    </test>
+    <listeners>
+        <listener class-name="org.uncommons.reportng.HTMLReporter">
+        </listener>
+        <!--<listener class-name="org.uncommons.reportng.JUnitXMLReporter">-->
+        <!--</listener>-->
+    </listeners>
+</suite>

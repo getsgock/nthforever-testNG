@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ipaylinks.jiaqi</groupId>
+    <artifactId>testNg</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.8.8</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+
+        <!-- 依赖reportNg 关联testNg-->
+        <dependency>
+            <groupId>org.uncommons</groupId>
+            <artifactId>reportng</artifactId>
+            <version>1.1.4</version>
+            <!--<scope>test</scope>-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.testng</groupId>
+                    <artifactId>testng</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>3.0</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.testng</groupId>-->
+            <!--<artifactId>testng</artifactId>-->
+            <!--<version>RELEASE</version>-->
+            <!--<scope>compile</scope>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>org.uncommons</groupId>-->
+            <!--<artifactId>reportng</artifactId>-->
+            <!--<version>1.1.4</version>-->
+            <!--<scope>test</scope>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.testng</groupId>-->
+                    <!--<artifactId>testng</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+    </dependencies>
+
+    <build>
+       <plugins>
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-compiler-plugin</artifactId>
+               <version>3.1</version>
+               <configuration>
+                   <source>1.8</source>
+                   <target>1.8</target>
+                   <compilerArgs>
+                       <arg>-Xlint:unchecked</arg>
+                       <arg>-Xlint:deprecation </arg>
+                       <!--<arg>endorseddirs=${endorsed.dir}</arg>-->
+                   </compilerArgs>
+               </configuration>
+           </plugin>
+
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-surefire-plugin</artifactId>
+               <version>2.20.1</version>
+               <configuration>
+                   <reportsDirectory>./target/surefire-reports</reportsDirectory>
+                   <workingDirectory>target/</workingDirectory>
+                   <forkMode>always</forkMode>
+                   <skip>false</skip>
+                   <testFailureIgnore>true</testFailureIgnore>
+                   <argLine>
+                       ${surefireArgLine} -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8
+                   </argLine>
+                   <!-- 添加插件 关联testNg.xml -->
+                   <suiteXmlFiles>
+                       <suiteXmlFile>testNG/testNG.xml</suiteXmlFile>
+                   </suiteXmlFiles>
+                   <!--添加ReportNg的监听器，修改最后的TestNg的报告-->
+                   <properties>
+                       <property>
+                           <name>useDefaultListeners</name>
+                           <value>false</value>
+                       </property>
+                       <property>
+                           <name>listener</name>
+                           <value>org.uncommons.reportng.HTMLReporter,
+                               org.uncommons.reportng.JUnitXMLReporter</value>
+                       </property>
+                   </properties>
+               </configuration>
+           </plugin>
+       </plugins>
+    </build>
+</project>
